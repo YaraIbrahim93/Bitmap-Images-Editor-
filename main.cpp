@@ -321,7 +321,7 @@ void blur() {
 
 // Load Image
 void loadImage() {
-    int operation;
+    char operation;
     char imageFileName[100];
     cout << "Hello, User Welcome To Our Simple PhotoShop Application"
             "\nChoose The Method You Want:"
@@ -345,22 +345,22 @@ void loadImage() {
     strcat(imageFileName, ".bmp");
     readGSBMP(imageFileName, image);
 
-    if (operation == 1) {
+    if (operation == '1') {
         blackAndWhite();
     }
-    if (operation == 2) {
+    if (operation == '2') {
         invertImage();
     }
-    if (operation == 3) {
+    if (operation == '3') {
         merge();
     }
-    if (operation == 4) { // FLIP
+    if (operation == '4') {
         flip();
     }
-    if (operation == 5) {
+    if (operation == '5') {
         darkenAndLighten();
     }
-    if (operation == 6) {
+    if (operation == '6') {
         int n;
         cout << "1.Rotate 90 Clockwise\n"
                 "2.Rotate 180 Clockwise\n"
@@ -379,30 +379,28 @@ void loadImage() {
         }
 
     }
-    if (operation == 7) { // DETECT EDGES
+    if (operation == '7') { // DETECT EDGES
 
     }
-    if (operation == 8) {
+    if (operation == '8') {
         enlarge();
 
     }
-    if (operation == 9) { // SHRINK
+    if (operation == '9') { // SHRINK
         shrink();
     }
-    if (operation == 97) { // MIRROR 1/2
+    if (operation== 'a') { // MIRROR 1/2
         mirror();
     }
-    if (operation == 98) { // SHUFFLE
+    if (operation == 'b') { // SHUFFLE
 
     }
-    if (operation == 99) { // BLUR
+    if (operation == 'c') { // BLUR
         blur();
     }
-    if (operation == 0) {
+    if (operation == '0') {
 
     }
-
-
 }
 
 // Save Image
