@@ -1,0 +1,3 @@
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\Simple-Bitmap.dir/objects.a
+C:\MinGW\bin\ar.exe qc CMakeFiles\Simple-Bitmap.dir/objects.a @CMakeFiles\Simple-Bitmap.dir\objects1.rsp
+C:\MinGW\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\Simple-Bitmap.dir/objects.a -Wl,--no-whole-archive -o Simple-Bitmap.exe -Wl,--out-implib,libSimple-Bitmap.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\Simple-Bitmap.dir\linklibs.rsp

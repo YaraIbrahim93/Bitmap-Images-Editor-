@@ -1,0 +1,3 @@
+C:/Users/mohamed alaa/Desktop/Simple-Bitmap-Editor/cmake-build-debug/CMakeFiles/Simple-Bitmap-Editor.dir
+C:/Users/mohamed alaa/Desktop/Simple-Bitmap-Editor/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/mohamed alaa/Desktop/Simple-Bitmap-Editor/cmake-build-debug/CMakeFiles/rebuild_cache.dir

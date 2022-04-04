@@ -1,0 +1,4 @@
+"C:\Program Files\CMake\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_DEPENDS_USE_COMPILER=FALSE -G "CodeBlocks - MinGW Makefiles" "C:\Users\mohamed alaa\Desktop\Simple-Bitmap-Editor"
+-- Configuring done
+-- Generating done
+-- Build files have been written to: C:/Users/mohamed alaa/Desktop/Simple-Bitmap-Editor/cmake-build-debug

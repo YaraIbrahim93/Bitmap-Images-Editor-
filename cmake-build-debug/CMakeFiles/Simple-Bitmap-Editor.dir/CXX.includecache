@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/mohamed alaa/Desktop/Simple-Bitmap-Editor/bmplib.cpp
+stdio.h
+-
+iostream
+-
+cstdlib
+-
+bmplib.h
+C:/Users/mohamed alaa/Desktop/Simple-Bitmap-Editor/bmplib.h
+unistd.h
+C:/Users/mohamed alaa/Desktop/Simple-Bitmap-Editor/unistd.h
+
+C:/Users/mohamed alaa/Desktop/Simple-Bitmap-Editor/bmplib.h
+
+C:/Users/mohamed alaa/Desktop/Simple-Bitmap-Editor/main.cpp
+iostream
+-
+fstream
+-
+cstring
+-
+cmath
+-
+bmplib.cpp
+C:/Users/mohamed alaa/Desktop/Simple-Bitmap-Editor/bmplib.cpp
+
