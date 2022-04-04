@@ -145,6 +145,38 @@ void darkenAndLighten() {
     }
 }
 
+// Detect Images Edges #7
+void detectEdges() {
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            if (image[i][j] > 127)
+                image1[i][j] = 255;
+            else
+                image1[i][j] = 0;
+        }
+    }
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            if (image1[i][j] == 0 &&image1[i-1][j]==0&&image1[i+1][j]==0&&image1[i][j-1]==0&&image1[i][j+1]==0) {
+                newImage[i][j] = 255;
+            }
+            else
+                newImage[i][j] = image1[i][j];
+        }
+    }
+    saveImage();
+}
+/*
+    for(int i = 0;i<SIZE;i++){
+        for(int j = 0 ;j<SIZE;j++){
+            if(image1[i][j]-image1[i-1][j-1]==0){
+                newImage[i][j] = 255;
+            }
+            else if(image1[i][j]-image1[i-1][j-1]==255||image1[i][j]-image1[i-1][j-1]==-255&&image1[i][j]-image1[i-2][j-2]==255||image1[i][j]-image1[i-2][j-2]==-255)
+                newImage[i][j] = 0;
+        }
+    }
+    */
 // Enlarge Image #8
 void enlarge() {
     int quarter;
@@ -380,7 +412,7 @@ void loadImage() {
 
     }
     if (operation == '7') { // DETECT EDGES
-
+        detectEdges();
     }
     if (operation == '8') {
         enlarge();
@@ -389,7 +421,7 @@ void loadImage() {
     if (operation == '9') { // SHRINK
         shrink();
     }
-    if (operation== 'a') { // MIRROR 1/2
+    if (operation == 'a') { // MIRROR 1/2
         mirror();
     }
     if (operation == 'b') { // SHUFFLE
