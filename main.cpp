@@ -395,7 +395,7 @@ void saveRGBImage() {
     writeRGBBMP(imageFileName, newRGBImage);
 }
 
-void loadRGBImageMenu() {
+void loadGSImageMenu() {
     char operation;
     cout << "\nChoose The Method You Want:"
             "\n1.Black & White Filter"
@@ -473,7 +473,7 @@ void loadRGBImageMenu() {
 
 
 // Load Image
-void loadGSImageMenu() {
+void loadRGBImageMenu() {
     char operation;
     cout << "\nChoose The Method You Want:"
             "\n1.Black & White Filter"
@@ -563,12 +563,10 @@ int main() {
         loadGSImageMenu();
     }
     else if(operation==2){
-
+        loadRGBImageMenu();
     }
     else if(operation==3){
         cout<<"Thanks For Using Our Application";
     }else
         cout<<"Wrong Operation";
 }
-
-
