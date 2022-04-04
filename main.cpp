@@ -1,9 +1,9 @@
 // Program: Main.cpp
-// Purpose: Demonstrate use of bmplip for handling
+// Purpose: Demonstrate use of bmplib for handling
 //          bmp colored and grayscale images
 //          Program load a gray image and store in another file
 // Author:  Mohamed Alaa Eddin Mostafa - 20211083 B
-// Author:  Eslam Sayed -
+// Author:  Islam Sayed -
 // Author:  Yara -
 // Date:    4/3/2022
 
@@ -18,7 +18,17 @@ unsigned char image[SIZE][SIZE];
 unsigned char image1[SIZE][SIZE];
 unsigned char newImage[SIZE][SIZE];
 
-void saveImage();
+void saveImage() {
+    char imageFileName[100];
+
+    // Get gray scale image target file name
+    cout << "Enter The Target Image File Name:";
+    cin >> imageFileName;
+
+    // Add to it .bmp extension and load image
+    strcat(imageFileName, ".bmp");
+    writeGSBMP(imageFileName, newImage);
+}
 
 // BLACK AND WHITE Image #1
 void blackAndWhite() {
@@ -425,17 +435,7 @@ void loadImage() {
 }
 
 // Save Image
-void saveImage() {
-    char imageFileName[100];
 
-    // Get gray scale image target file name
-    cout << "Enter The Target Image File Name:";
-    cin >> imageFileName;
-
-    // Add to it .bmp extension and load image
-    strcat(imageFileName, ".bmp");
-    writeGSBMP(imageFileName, newImage);
-}
 
 int main() {
     loadImage();
