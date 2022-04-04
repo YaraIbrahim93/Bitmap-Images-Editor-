@@ -166,17 +166,6 @@ void detectEdges() {
     }
     saveImage();
 }
-/*
-    for(int i = 0;i<SIZE;i++){
-        for(int j = 0 ;j<SIZE;j++){
-            if(image1[i][j]-image1[i-1][j-1]==0){
-                newImage[i][j] = 255;
-            }
-            else if(image1[i][j]-image1[i-1][j-1]==255||image1[i][j]-image1[i-1][j-1]==-255&&image1[i][j]-image1[i-2][j-2]==255||image1[i][j]-image1[i-2][j-2]==-255)
-                newImage[i][j] = 0;
-        }
-    }
-    */
 // Enlarge Image #8
 void enlarge() {
     int quarter;
