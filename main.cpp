@@ -155,9 +155,9 @@ void GSdarkenAndLighten() {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 if (image[i][j] >= SIZE / 2)
-                    newImage[i][j] = image[i][j] + 64;
+                    newImage[i][j] = min(image[i][j] + 64,255);
                 else
-                    newImage[i][j] = image[i][j] + 128;
+                    newImage[i][j] = min(image[i][j] + 128,255);
             }
         }
         saveGSImage();
