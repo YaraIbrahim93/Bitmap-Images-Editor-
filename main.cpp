@@ -16,9 +16,10 @@
 using namespace std;
 unsigned char image[SIZE][SIZE];
 unsigned char image1[SIZE][SIZE];
-unsigned char newImage[SIZE][SIZE];
+unsigned char newGSImage[SIZE][SIZE];
 unsigned char RGBImage[SIZE][SIZE][RGB];
 unsigned char newRGBImage[SIZE][SIZE][RGB];
+unsigned char newRGBImage1[SIZE][SIZE][RGB];
 
 void readGSImage() {
     char imageFileName[100];
@@ -37,7 +38,7 @@ void saveGSImage() {
 
     // Add to it .bmp extension and load image
     strcat(imageFileName, ".bmp");
-    writeGSBMP(imageFileName, newImage);
+    writeGSBMP(imageFileName, newGSImage);
 }
 //------------------------------GREY SCALE BITMAP FILTERS------------------------------//
 
@@ -47,9 +48,9 @@ void GSblackAndWhite() {
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
             if (image[i][j] > 127)
-                newImage[i][j] = 255;
+                newGSImage[i][j] = 255;
             else
-                newImage[i][j] = 0;
+                newGSImage[i][j] = 0;
         }
     }
     saveGSImage();
@@ -60,7 +61,7 @@ void GSinvertImage() {
     readGSImage();
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
-            newImage[i][j] = 255 - image[i][j];
+            newGSImage[i][j] = 255 - image[i][j];
         }
     }
     saveGSImage();
@@ -76,7 +77,7 @@ void GSmerge() {
     readGSBMP(image2ndFileName, image1);
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
-            newImage[i][j] = (image1[i][j] + image[i][j]) / 2;
+            newGSImage[i][j] = (image1[i][j] + image[i][j]) / 2;
         }
     }
     saveGSImage();
@@ -90,18 +91,18 @@ void GSflip() {
             "2.Vertically\n"
             "Operation NO.";
     cin >> n;
-    if (n == 1) {
+    if (n == 2) {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                newImage[i][j] = image[255 - i][j];
+                newGSImage[i][j] = image[255 - i][j];
             }
         }
         saveGSImage();
     }
-    if (n == 2) {
+    if (n == 1) {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                newImage[i][j] = image[i][255 - j];
+                newGSImage[i][j] = image[i][255 - j];
             }
         }
         saveGSImage();
@@ -115,7 +116,7 @@ void GSrotate90() {
     readGSImage();
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
-            newImage[i][j] = image[255 - j][i];
+            newGSImage[i][j] = image[255 - j][i];
         }
     }
     saveGSImage();
@@ -125,7 +126,7 @@ void GSrotate180() {
     readGSImage();
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
-            newImage[i][j] = image[255 - i][255 - j];
+            newGSImage[i][j] = image[255 - i][255 - j];
         }
     }
     saveGSImage();
@@ -136,7 +137,7 @@ void GSrotate270() {
     int k = 255;
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
-            newImage[i][j] = image[j][k];
+            newGSImage[i][j] = image[j][k];
         }
         k--;
     }
@@ -155,9 +156,9 @@ void GSdarkenAndLighten() {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 if (image[i][j] >= SIZE / 2)
-                    newImage[i][j] = min(image[i][j] + 64,255);
+                    newGSImage[i][j] = min(image[i][j] + 64, 255);
                 else
-                    newImage[i][j] = min(image[i][j] + 128,255);
+                    newGSImage[i][j] = min(image[i][j] + 128, 255);
             }
         }
         saveGSImage();
@@ -166,7 +167,7 @@ void GSdarkenAndLighten() {
     if (n == 1) {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                newImage[i][j] = image[i][j] * 0.5;
+                newGSImage[i][j] = image[i][j] * 0.5;
             }
         }
         saveGSImage();
@@ -188,9 +189,9 @@ void GSdetectEdges() {
         for (int j = 0; j < SIZE; j++) {
             if (image1[i][j] == 0 && image1[i - 1][j] == 0 && image1[i + 1][j] == 0 && image1[i][j - 1] == 0 &&
                 image1[i][j + 1] == 0) {
-                newImage[i][j] = 255;
+                newGSImage[i][j] = 255;
             } else
-                newImage[i][j] = image1[i][j];
+                newGSImage[i][j] = image1[i][j];
         }
     }
     saveGSImage();
@@ -205,40 +206,40 @@ void GSenlarge() {
     if (quarter == 1) {
         for (int i = 0; i < SIZE / 2; i++) {
             for (int j = 0; j < SIZE / 2; j++) {
-                newImage[i * 2][j * 2] = image[i][j];
-                newImage[i * 2][(j * 2) + 1] = image[i][j];
-                newImage[(i * 2) + 1][j * 2] = image[i][j];
-                newImage[(i * 2) + 1][(j * 2) + 1] = image[i][j];
+                newGSImage[i * 2][j * 2] = image[i][j];
+                newGSImage[i * 2][(j * 2) + 1] = image[i][j];
+                newGSImage[(i * 2) + 1][j * 2] = image[i][j];
+                newGSImage[(i * 2) + 1][(j * 2) + 1] = image[i][j];
             }
         }
         saveGSImage();
     } else if (quarter == 2) {
         for (int i = 0; i < SIZE / 2; i++) {
             for (int j = 127; j < SIZE; j++) {
-                newImage[i * 2][j * 2] = image[i][j];
-                newImage[i * 2][(j * 2) + 1] = image[i][j];
-                newImage[(i * 2) + 1][j * 2] = image[i][j];
-                newImage[(i * 2) + 1][(j * 2) + 1] = image[i][j];
+                newGSImage[i * 2][j * 2] = image[i][j];
+                newGSImage[i * 2][(j * 2) + 1] = image[i][j];
+                newGSImage[(i * 2) + 1][j * 2] = image[i][j];
+                newGSImage[(i * 2) + 1][(j * 2) + 1] = image[i][j];
             }
         }
         saveGSImage();
     } else if (quarter == 3) {
         for (int i = SIZE / 2; i < SIZE; i++) {
             for (int j = 0; j < SIZE / 2; j++) {
-                newImage[((i - SIZE / 2) * 2)][j * 2] = image[i][j];
-                newImage[((i - SIZE / 2) * 2)][(j * 2) + 1] = image[i][j];
-                newImage[((i - SIZE / 2) * 2) + 1][j * 2] = image[i][j];
-                newImage[((i - SIZE / 2) * 2) + 1][(j * 2) + 1] = image[i][j];
+                newGSImage[((i - SIZE / 2) * 2)][j * 2] = image[i][j];
+                newGSImage[((i - SIZE / 2) * 2)][(j * 2) + 1] = image[i][j];
+                newGSImage[((i - SIZE / 2) * 2) + 1][j * 2] = image[i][j];
+                newGSImage[((i - SIZE / 2) * 2) + 1][(j * 2) + 1] = image[i][j];
             }
         }
         saveGSImage();
     } else if (quarter == 4) {
         for (int i = SIZE / 2; i < SIZE; i++) {
             for (int j = SIZE / 2; j < SIZE; j++) {
-                newImage[((i - SIZE / 2) * 2)][j * 2] = image[i][j];
-                newImage[((i - SIZE / 2) * 2)][(j * 2) + 1] = image[i][j];
-                newImage[((i - SIZE / 2) * 2) + 1][j * 2] = image[i][j];
-                newImage[((i - SIZE / 2) * 2) + 1][(j * 2) + 1] = image[i][j];
+                newGSImage[((i - SIZE / 2) * 2)][j * 2] = image[i][j];
+                newGSImage[((i - SIZE / 2) * 2)][(j * 2) + 1] = image[i][j];
+                newGSImage[((i - SIZE / 2) * 2) + 1][j * 2] = image[i][j];
+                newGSImage[((i - SIZE / 2) * 2) + 1][(j * 2) + 1] = image[i][j];
             }
         }
         saveGSImage();
@@ -259,7 +260,7 @@ void GSshrink() {
         for (int i = 0; i < SIZE / 2; i++) {
             int col = 0;
             for (int j = 0; j < SIZE / 2; j++) {
-                newImage[i][j] = image[row][col];
+                newGSImage[i][j] = image[row][col];
                 col += 2;
             }
             row += 2;
@@ -269,7 +270,7 @@ void GSshrink() {
         for (int i = 0; i < SIZE / 3; i++) {
             int col = 0;
             for (int j = 0; j < SIZE / 3; j++) {
-                newImage[i][j] = image[row][col];
+                newGSImage[i][j] = image[row][col];
                 col += 3;
             }
             row += 3;
@@ -280,7 +281,7 @@ void GSshrink() {
         for (int i = 0; i < SIZE / 4; i++) {
             int col = 0;
             for (int j = 0; j < SIZE / 4; j++) {
-                newImage[i][j] = image[row][col];
+                newGSImage[i][j] = image[row][col];
                 col += 4;
             }
             row += 4;
@@ -302,12 +303,12 @@ void GSmirror() {
     if (n == 1) {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE / 2; j++) {
-                newImage[i][j] = image[i][j];
+                newGSImage[i][j] = image[i][j];
             }
         }
         for (int i = 0; i < SIZE; i++) {
             for (int j = SIZE / 2; j < SIZE; j++) {
-                newImage[i][j] = image[i][255 - j];
+                newGSImage[i][j] = image[i][255 - j];
             }
         }
         saveGSImage();
@@ -315,12 +316,12 @@ void GSmirror() {
     if (n == 2) {
         for (int i = 0; i < SIZE; i++) {
             for (int j = SIZE / 2; j < SIZE; j++) {
-                newImage[i][j] = image[i][j];
+                newGSImage[i][j] = image[i][j];
             }
         }
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE / 2; j++) {
-                newImage[i][j] = image[i][255 - j];
+                newGSImage[i][j] = image[i][255 - j];
             }
         }
         saveGSImage();
@@ -328,12 +329,12 @@ void GSmirror() {
     if (n == 3) {
         for (int i = 0; i < SIZE / 2; i++) {
             for (int j = 0; j < SIZE; j++) {
-                newImage[i][j] = image[i][j];
+                newGSImage[i][j] = image[i][j];
             }
         }
         for (int i = SIZE / 2; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                newImage[i][j] = image[255 - i][j];
+                newGSImage[i][j] = image[255 - i][j];
             }
         }
         saveGSImage();
@@ -341,12 +342,12 @@ void GSmirror() {
     if (n == 4) {
         for (int i = SIZE / 2; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                newImage[i][j] = image[i][j];
+                newGSImage[i][j] = image[i][j];
             }
         }
         for (int i = 0; i < SIZE / 2; i++) {
             for (int j = 0; j < SIZE; j++) {
-                newImage[i][j] = image[255 - i][j];
+                newGSImage[i][j] = image[255 - i][j];
             }
         }
         saveGSImage();
@@ -360,15 +361,15 @@ void GSblur() {
     readGSImage();
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
-            newImage[i][j] = (image[i - 2][j - 2] + image[i - 2][j - 1] + image[i - 2][j] + image[i - 2][j + 1] +
-                              image[i - 2][j + 2] +
-                              image[i - 1][j - 2] + image[i - 1][j - 1] + image[i - 1][j] + image[i - 1][j + 1] +
-                              image[i - 1][j + 2] +
-                              image[i][j - 2] + image[i][j - 1] + image[i][j] + image[i][j + 1] + image[i][j + 2] +
-                              image[i + 1][j - 2] + image[i + 1][j - 1] + image[i + 1][j] + image[i + 1][j + 1] +
-                              image[i + 1][j + 1] +
-                              image[i + 2][j - 2] + image[i + 2][j - 1] + image[i + 2][j] + image[i + 2][j + 1] +
-                              image[i + 2][j + 2]) / 25;
+            newGSImage[i][j] = (image[i - 2][j - 2] + image[i - 2][j - 1] + image[i - 2][j] + image[i - 2][j + 1] +
+                                image[i - 2][j + 2] +
+                                image[i - 1][j - 2] + image[i - 1][j - 1] + image[i - 1][j] + image[i - 1][j + 1] +
+                                image[i - 1][j + 2] +
+                                image[i][j - 2] + image[i][j - 1] + image[i][j] + image[i][j + 1] + image[i][j + 2] +
+                                image[i + 1][j - 2] + image[i + 1][j - 1] + image[i + 1][j] + image[i + 1][j + 1] +
+                                image[i + 1][j + 1] +
+                                image[i + 2][j - 2] + image[i + 2][j - 1] + image[i + 2][j] + image[i + 2][j + 1] +
+                                image[i + 2][j + 2]) / 25;
         }
     }
     saveGSImage();
@@ -395,6 +396,339 @@ void saveRGBImage() {
     writeRGBBMP(imageFileName, newRGBImage);
 }
 
+//RGB Black And White #1
+void RGBblackAndWhite() {
+    readRGBImage();
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            int sum = 0;
+            for (int k = 0; k < RGB; k++) {
+                sum += RGBImage[i][j][k];
+            }
+            newGSImage[i][j] = sum / 3;
+        }
+    }
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            if (newGSImage[i][j] > 127)
+                newGSImage[i][j] = 255;
+            else
+                newGSImage[i][j] = 0;
+        }
+    }
+    saveGSImage();
+}
+
+//RGB Invert #2
+void RGBInvert() {
+    readRGBImage();
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            for (int k = 0; k < RGB; k++) {
+                newRGBImage[i][j][k] = 255 - RGBImage[i][j][k];
+            }
+        }
+    }
+    saveRGBImage();
+}
+
+//RGB Merge #3
+void RGBMerge() {
+    readRGBImage();
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            for (int k = 0; k < RGB; k++) {
+                newRGBImage[i][j][k] = RGBImage[i][j][k];
+            }
+        }
+    }
+    readRGBImage();
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            for (int k = 0; k < RGB; k++) {
+                newRGBImage[i][j][k] = (newRGBImage[i][j][k] + RGBImage[i][j][k]) / 2;
+            }
+        }
+    }
+    saveRGBImage();
+}
+
+//RGB Flip #4
+void RGBFlip() {
+    int n;
+    cout << "\n1.Horizontally\n"
+            "2.Vertically\n"
+            "Operation NO.";
+    cin >> n;
+    readRGBImage();
+    if (n == 2) {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                for (int k = 0; k < RGB; k++) {
+                    newRGBImage[i][j][k] = RGBImage[255 - i][j][k];
+                }
+            }
+        }
+        saveRGBImage();
+    } else if (n == 1) {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                for (int k = 0; k < RGB; k++) {
+                    newRGBImage[i][j][k] = RGBImage[i][255 - j][k];
+                }
+            }
+        }
+        saveRGBImage();
+    }
+
+}
+
+//RGB Rotate #5
+void RGBRotate90() {
+    readRGBImage();
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            for (int k = 0; k < RGB; k++) {
+                newRGBImage[i][j][k] = RGBImage[255 - j][i][k];
+            }
+        }
+    }
+    saveRGBImage();
+}
+
+void RGBRotate180() {
+
+    readRGBImage();
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            for (int k = 0; k < RGB; k++) {
+                newRGBImage[i][j][k] = RGBImage[255 - i][255 - j][k];
+            }
+        }
+    }
+    saveRGBImage();
+}
+
+void RGBRotate270() {
+
+    readRGBImage();
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            for (int k = 0; k < RGB; k++) {
+                newRGBImage1[i][j][k] = RGBImage[255 - i][255 - j][k];
+            }
+        }
+    }
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            for (int k = 0; k < RGB; k++) {
+                newRGBImage[i][j][k] = newRGBImage1[255 - j][i][k];
+            }
+        }
+    }
+
+    saveRGBImage();
+}
+
+//RGB Darken And Lighten #6
+void RGBDarkenAndLighten() {
+    int n;
+    cout << "\n1.Darken"
+            "\n2.Lighten"
+            "\nOperation No.";
+    cin >> n;
+    readRGBImage();
+    if (n == 1) {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                for (int k = 0; k < RGB; k++) {
+                    newRGBImage[i][j][k] = RGBImage[i][j][k] * 0.5;
+                }
+
+            }
+        }
+        saveRGBImage();
+    }
+    if (n == 2) {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                for (int k = 0; k < RGB; k++) {
+                    if (RGBImage[i][j][k] > SIZE / 2)
+                        newRGBImage[i][j][k] = min(RGBImage[i][j][k] + 128, 255);
+                    else
+                        newRGBImage[i][j][k] = min(RGBImage[i][j][k] + 64, 255);
+                }
+            }
+        }
+        saveRGBImage();
+    }
+}
+
+//RGB Detect Image Edges #7
+void RGBdetectImageEdges() {
+    readRGBImage();
+
+    // Change RGB Image to Greyscale Image
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            int sum = 0;
+            for (int k = 0; k < RGB; k++) {
+                sum += RGBImage[i][j][k];
+            }
+            image[i][j] = sum / 3;
+        }
+    }
+
+    // Change Greyscale Image Into Black And White Image.
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            if (image[i][j] > 127)
+                image1[i][j] = 255;
+            else
+                image1[i][j] = 0;
+        }
+    }
+
+    // Detect Black&White Image Edges
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            if (image1[i][j] == 0 && image1[i - 1][j] == 0 && image1[i + 1][j] == 0 && image1[i][j - 1] == 0 &&
+                image1[i][j + 1] == 0) {
+                newGSImage[i][j] = 255;
+            } else
+                newGSImage[i][j] = image1[i][j];
+        }
+    }
+    saveGSImage();
+
+}
+
+//RGB Enlarge Image #8
+void RGBenlarge() {
+
+}
+
+//RGB Shrink Image #9
+void RGBshrink() {
+
+}
+
+//RGB Mirror #A
+void RGBmirror() {
+
+}
+
+//RGB Shuffle #B
+void RGBshuffle() {
+
+}
+
+//RGB Blur #C
+void RGBblur() {
+    readRGBImage();
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            for (int k = 0; k < RGB; k++) {
+                newRGBImage[i][j][k] = (RGBImage[i - 2][j - 2][k] + RGBImage[i - 2][j - 1][k] + RGBImage[i - 2][j][k] +
+                                        RGBImage[i - 2][j + 1][k] +
+                                        RGBImage[i - 2][j + 2][k] +
+                                        RGBImage[i - 1][j - 2][k] + RGBImage[i - 1][j - 1][k] + RGBImage[i - 1][j][k] +
+                                        RGBImage[i - 1][j + 1][k] +
+                                        RGBImage[i - 1][j + 2][k] +
+                                        RGBImage[i][j - 2][k] + RGBImage[i][j - 1][k] + RGBImage[i][j][k] +
+                                        RGBImage[i][j + 1][k] +
+                                        RGBImage[i][j + 2][k] +
+                                        RGBImage[i + 1][j - 2][k] + RGBImage[i + 1][j - 1][k] + RGBImage[i + 1][j][k] +
+                                        RGBImage[i + 1][j + 1][k] +
+                                        RGBImage[i + 1][j + 1][k] +
+                                        RGBImage[i + 2][j - 2][k] + RGBImage[i + 2][j - 1][k] + RGBImage[i + 2][j][k] +
+                                        RGBImage[i + 2][j + 1][k] +
+                                        RGBImage[i + 2][j + 2][k]) / 25;
+            }
+        }
+    }
+    saveRGBImage();
+}
+
+// Load RGB Image
+void loadRGBImageMenu() {
+    char operation;
+    cout << "\nChoose The Method You Want:"
+            "\n1.Black & White Filter"
+            "\n2.Invert Filter"
+            "\n3.Merge Filter"
+            "\n4.Flip Image"
+            "\n5.Darken and Lighten Image"
+            "\n6.Rotate Image"
+            "\n7.Detect Image Edges"
+            "\n8.Enlarge Image"
+            "\n9.Shrink Image"
+            "\na.Mirror 1/2 Image"
+            "\nb.Shuffle Image"
+            "\nc.Blur Image"
+            "\n0.Exit"
+            "\nOperation No.";
+    cin >> operation;
+    if (operation == '1') {
+        RGBblackAndWhite();
+    }
+
+    if (operation == '2') {
+        RGBInvert();
+    }
+    if (operation == '3') {
+        RGBMerge();
+    }
+    if (operation == '4') {
+        RGBFlip();
+    }
+    if (operation == '5') {
+        RGBDarkenAndLighten();
+    }
+    if (operation == '6') {
+        int n;
+        cout << "1.Rotate 90 Clockwise\n"
+                "2.Rotate 180 Clockwise\n"
+                "3.Rotate 270 Clockwise\n"
+                "4.Rotate 360 Clockwise\n"
+                "Operation No.";
+        cin >> n;
+        if (n == 1) {
+            RGBRotate90();
+        } else if (n == 2) {
+            RGBRotate180();
+        } else if (n == 3) {
+            RGBRotate270();
+        } else if (n == 4) {
+            cout << "It Remains The Same Image";
+        }
+
+    }
+    if (operation == '7') { // DETECT EDGES
+        RGBdetectImageEdges();
+    }
+    if (operation == '8') {
+
+
+    }
+    if (operation == '9') { // SHRINK
+    }
+    if (operation == 'a') { // MIRROR 1/2
+
+    }
+    if (operation == 'b') { // SHUFFLE
+
+    }
+    if (operation == 'c') { // BLUR
+        RGBblur();
+    }
+    if (operation == '0') {
+        cout << "Thanks For using Our Application";
+    }
+}
+
+
+// Load GS Image
 void loadGSImageMenu() {
     char operation;
     cout << "\nChoose The Method You Want:"
@@ -471,85 +805,6 @@ void loadGSImageMenu() {
     }
 }
 
-
-// Load Image
-void loadRGBImageMenu() {
-    char operation;
-    cout << "\nChoose The Method You Want:"
-            "\n1.Black & White Filter"
-            "\n2.Invert Filter"
-            "\n3.Merge Filter"
-            "\n4.Flip Image"
-            "\n5.Darken and Lighten Image"
-            "\n6.Rotate Image"
-            "\n7.Detect Image Edges"
-            "\n8.Enlarge Image"
-            "\n9.Shrink Image"
-            "\na.Mirror 1/2 Image"
-            "\nb.Shuffle Image"
-            "\nc.Blur Image"
-            "\n0.Exit"
-            "\nOperation No.";
-    cin >> operation;
-    if (operation == '1') {
-
-    }
-
-    if (operation == '2') {
-
-    }
-    if (operation == '3') {
-
-    }
-    if (operation == '4') {
-
-    }
-    if (operation == '5') {
-
-    }
-    if (operation == '6') {
-        int n;
-        cout << "1.Rotate 90 Clockwise\n"
-                "2.Rotate 180 Clockwise\n"
-                "3.Rotate 270 Clockwise\n"
-                "4.Rotate 360 Clockwise\n"
-                "Operation No.";
-        cin >> n;
-        if (n == 1) {
-
-        } else if (n == 2) {
-
-        } else if (n == 3) {
-
-        } else if (n == 4) {
-            cout << "It Remains The Same Image";
-        }
-
-    }
-    if (operation == '7') { // DETECT EDGES
-
-    }
-    if (operation == '8') {
-
-
-    }
-    if (operation == '9') { // SHRINK
-
-    }
-    if (operation == 'a') { // MIRROR 1/2
-
-    }
-    if (operation == 'b') { // SHUFFLE
-
-    }
-    if (operation == 'c') { // BLUR
-
-    }
-    if (operation == '0') {
-        cout << "Thanks For using Our Application";
-    }
-}
-
 int main() {
     int operation;
     cout << "Hello, User Welcome To Simple Bitmap Images Editor"
@@ -561,12 +816,10 @@ int main() {
     cin >> operation;
     if (operation == 1) {
         loadGSImageMenu();
-    }
-    else if(operation==2){
+    } else if (operation == 2) {
         loadRGBImageMenu();
-    }
-    else if(operation==3){
-        cout<<"Thanks For Using Our Application";
-    }else
-        cout<<"Wrong Operation";
+    } else if (operation == 3) {
+        cout << "Thanks For Using Our Application";
+    } else
+        cout << "Wrong Operation";
 }
